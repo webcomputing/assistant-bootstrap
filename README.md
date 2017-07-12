@@ -13,7 +13,7 @@ This repository initializes an example "number guessing" assistantJS application
 2. Install and run redis
 3. Recommended: Install https://ngrok.com/ -this makes it easy to test your app on an amazon echo or google home without deploying
 
-## Get started on an assistant
+## Getting started on an assistant
 1. Clone this repository
 2. Open `config/components.ts` and edit redis connection settings, if needed
 3. Run `tsc` to compile to javascript
