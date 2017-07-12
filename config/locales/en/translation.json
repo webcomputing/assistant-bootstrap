@@ -1,0 +1,5 @@
+{
+  "mainState": {
+    "invokeGenericIntent": "{Hello|Hi|Welcome}!"
+  }
+}

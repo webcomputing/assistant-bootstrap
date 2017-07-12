@@ -15,10 +15,11 @@
     "assistant-validations": "^0.1.0"
   },
   "devDependencies": {
-    "typescript": "2.3.4",
     "@types/jasmine": "^2.5.48",
     "jasmine-ts": "^0.1.3",
-    "tslint": "^5.4.0"
+    "reflect-metadata": "^0.1.10",
+    "tslint": "^5.4.0",
+    "typescript": "2.3.4"
   },
   "author": "Antonius Ostermann",
   "repository": "https://github.com/webcomputing/assistant-bootstrap",
