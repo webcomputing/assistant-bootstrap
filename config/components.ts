@@ -35,7 +35,7 @@ let i18nConfiguration: i18nInterfaces.Configuration = {
   i18nextAdditionalConfiguration: {
     // This entry is needed and tells i18next where to find your language files.
     backend: {
-      loadPath: __dirname + "/locales/{{lng}}/{{ns}}.json",
+      loadPath: process.cwd() + "/config/locales/{{lng}}/{{ns}}.json",
     },
     lngs: ["en"],
     fallbackLng: "en",
