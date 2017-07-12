@@ -1,0 +1,29 @@
+{
+  "name": "assistant-bootstrap",
+  "version": "0.1.0",
+  "description": "Getting-Started-Repository for assistant.",
+  "main": "js/index.js",
+  "scripts": {
+    "test": "jasmine-ts spec/**/*.spec.ts"
+  },
+  "dependencies": {
+    "assistant-alexa": "^0.1.0",
+    "assistant-apiai": "^0.1.0",
+    "assistant-authentication": "^0.1.0",
+    "assistant-google": "^0.1.0",
+    "assistant-source": "^0.1.0",
+    "assistant-validations": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "2.3.4",
+    "@types/jasmine": "^2.5.48",
+    "jasmine-ts": "^0.1.3",
+    "tslint": "^5.4.0"
+  },
+  "author": "Antonius Ostermann",
+  "repository": "https://github.com/webcomputing/assistant-bootstrap",
+  "license": "ISC",
+  "publishConfig": {
+    "registry": "http://sinopia.verstehe.local:4873"
+  }
+}
