@@ -10,8 +10,8 @@ This repository initializes an example "number guessing" assistantJS application
 
 ## Prerequisites
 1. Proper global installation of assistantJS
-2. Install and run redis
-3. Recommended: Install https://ngrok.com/ -this makes it easy to test your app on an amazon echo or google home without deploying
+2. Installed and running redis
+3. Recommended: Installed https://ngrok.com/ - this makes it easy to test your app on an amazon echo or google home without deploying
 
 ## Getting started on an assistant
 1. Clone this repository
