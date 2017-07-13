@@ -4,6 +4,7 @@ import { descriptor as apiAiDescriptor } from "assistant-apiai";
 import { descriptor as googleDescriptor } from "assistant-google";
 import { descriptor as authenticationDescriptor, AuthenticationSetup } from "assistant-authentication";
 import { descriptor as validationsDescriptor, PromptState } from "assistant-validations";
+import { descriptor as genericUtterancesDescriptor } from "assistant-generic-utterances";
 import components from "./config/components";
 
 /** 
@@ -29,6 +30,7 @@ export function initializeSetups (assistantJs: AssistantJSSetup, stateMachineSet
   assistantJs.registerComponent(validationsDescriptor);
   assistantJs.registerComponent(apiAiDescriptor);
   assistantJs.registerComponent(googleDescriptor);
+  assistantJs.registerComponent(genericUtterancesDescriptor);
 
   // Configure components
   assistantJs.addConfiguration(components);

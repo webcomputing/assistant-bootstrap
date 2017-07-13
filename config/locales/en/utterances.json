@@ -6,7 +6,7 @@
     "Start"
   ],
   "guessNumberIntent": [
-    "{I guess|I think|} your number {is|was} {{guessedNumber}}",
+    "{I guess|I think|} {it|your number|} {is|was} {{guessedNumber}}",
     "Is your number {{guessedNumber}}",
     "{Maybe|Possibly|Guess|Think} {{guessedNumber}}"
   ]

@@ -7,6 +7,7 @@ This repository initializes an example "number guessing" assistantJS application
 3. assistant-google
 4. assistant-validations
 5. assistant-authentication
+6. assistant-generic-utterances
 
 ## Prerequisites
 1. Proper global installation of assistantJS

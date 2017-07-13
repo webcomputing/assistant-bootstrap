@@ -12,7 +12,8 @@
     "assistant-authentication": "^0.1.0",
     "assistant-google": "^0.1.0",
     "assistant-source": "^0.1.0",
-    "assistant-validations": "^0.1.0"
+    "assistant-validations": "^0.1.0",
+    "assistant-generic-utterances": "^0.1.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.5.48",
