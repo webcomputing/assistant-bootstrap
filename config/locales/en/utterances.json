@@ -1,0 +1,13 @@
+{
+  "startGameIntent": [
+    "{Start|Play|Start} a {game|round} {now|}",
+    "{Let's|} {play|go}",
+    "Go for it",
+    "Start"
+  ],
+  "guessNumberIntent": [
+    "{I guess|I think|} your number {is|was} {{guessedNumber}}",
+    "Is your number {{guesseNumber}}",
+    "{Maybe|Possibly|Guess|Think} {{guessNumber}}"
+  ]
+}

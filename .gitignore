@@ -1,4 +1,5 @@
 .vscode
 js
 node_modules
-builds
+builds/*
+!builds/.keep
