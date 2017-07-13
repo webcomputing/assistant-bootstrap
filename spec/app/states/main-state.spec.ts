@@ -16,5 +16,14 @@ describe("MainState", function() {
         done();
       });
     });
+
+    describe("unhandledIntent", function() {
+      it("tries to help", async function(done) {
+        let responseHandler = await this.callIntent("notExistingIntent") as unifierInterfaces.MinimalResponseHandler;
+        expect(responseHandler.endSession).toBeFalsy();
+        expect(this.translateValuesFor("mainState.unhandledIntent")).toContain(responseHandler.voiceMessage);
+        done();
+      });
+    });
   })
 });
