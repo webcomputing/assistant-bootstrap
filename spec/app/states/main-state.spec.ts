@@ -3,6 +3,7 @@ import { unifierInterfaces, injectionNames, servicesInterfaces } from "assistant
 describe("MainState", function() {
   let responseHandler: unifierInterfaces.MinimalResponseHandler;
   let currentSessionFactory: () => servicesInterfaces.Session;
+  let currentStateNameProvider: () => Promise<string>;
 
   describe("on platform = alexa", function() {
     beforeEach(function() {
@@ -65,6 +66,13 @@ describe("MainState", function() {
         let myNumber = await currentSessionFactory().get("myNumber");
         expect(parseInt(myNumber)).toBeGreaterThan(0);
         expect(parseInt(myNumber)).toBeLessThanOrEqual(10);
+        done();
+      });
+
+      it("sets the current conversation state to 'GameState'", async function(done) {
+        currentStateNameProvider = this.container.inversifyInstance.get(injectionNames.current.stateNameProvider);
+        let currentStateName = await currentStateNameProvider();
+        expect(currentStateName).toEqual("GameState");
         done();
       });
     });
