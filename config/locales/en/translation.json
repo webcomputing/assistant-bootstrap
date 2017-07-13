@@ -1,11 +1,19 @@
 {
   "root": {
-    "cancelGenericIntent": "{See you next time!|Goodbye!}"
+    "cancelGenericIntent": "{See you next time!|Goodbye!}",
+    "unhandledIntent": "Sorry, I didn't understand that."
   },
   "mainState": {
     "invokeGenericIntent": "{Hello|Hi|Welcome}!",
     "unhandledIntent": "{Sorry, I did not understand|Ouch, didn't understand you.|} Just say 'start game' to start a game!}",
     "helpGenericIntent": "{No problem!|} I think of a number between 0 and 10, and you guess what it was. {Sounds cool, doesn't it?|} Start a game by saying 'start game'!",
     "startGameIntent": "{Allright!|Nice!} Guess my number!"
+  },
+  "gameState": {
+    "helpGenericIntent": "I'm thinking of a number between 1 and 10. Just have a guess!",
+    "unhandledIntent": [
+      "Sorry, didn't understand you. Give me a number between 1 and 10, please!",
+      "You cannot do that here. What number do you guess am I thinking of?"
+    ]
   }
 }

@@ -21,4 +21,6 @@ export class GameState extends ApplicationState {
     super(responseFactory, translateHelper);
     this.currentSessionFactory = sessionFactory;
   }
+
+  
 }
