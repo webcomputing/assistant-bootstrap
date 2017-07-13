@@ -1,6 +1,7 @@
 import { RedisClient } from "redis";
 import { i18nInterfaces, unifierInterfaces, servicesInterfaces } from "assistant-source";
 import { Configuration as AlexaConfguration } from "assistant-alexa";
+import { Configuration as ApiAiConfiguration } from "assistant-apiai";
 
 let unifierConfiguration: unifierInterfaces.Configuration = {
   /* 
@@ -30,6 +31,14 @@ let alexaConfiguration: AlexaConfguration = {
   }
 };
 
+// Same applies to api.ai
+let apiAiConfiguration: ApiAiConfiguration = {
+  route: "/apiai",
+  entities: {
+    "number": "@sys.number"
+  }
+}
+
 let i18nConfiguration: i18nInterfaces.Configuration = {
   // This is basically the i18next configuration. Check out https://www.i18next.com/ for more information!
   i18nextAdditionalConfiguration: {
@@ -55,6 +64,7 @@ let servicesConfiguration: servicesInterfaces.Configuration = {
  */
 export default {
   "alexa": alexaConfiguration,
+  "apiai": apiAiConfiguration,
   "core:i18n": i18nConfiguration,
   "core:unifier": unifierConfiguration,
   "core:services": servicesInterfaces

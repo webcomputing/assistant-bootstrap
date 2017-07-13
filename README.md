@@ -28,8 +28,9 @@ This repository initializes an example "number guessing" assistantJS application
 9. Paste the generated intents and utterances into skill configuration
 10. Paste your ngrok https url (step (6)) into the skill configuration, but don't forget to add the configured route (see `config/components.ts`), which defaults to "/alexa"
 
-### Run on google assistant
-TBD
+### Run on google assistant / api.ai
+11. Import the generated zip archive into api.ai
+12. Paste your ngrok https url (step (6)) into the fulfillment configuration, but don't forget to add the configured route (see `config/components.ts`), which defaults to "/apiai"
 
 ## Debug
 Remember: assistantJS uses the awesome [debug module](https://www.npmjs.com/package/debug) to print log information if needed. Just start your assistantJS server or run your tests with `DEBUG=assistant` (or `DEBUG=assistant,assistant-alexa,assistant-authentication` - see above for components overview) to get debug information!
