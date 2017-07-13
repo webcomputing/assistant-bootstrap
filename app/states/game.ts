@@ -1,9 +1,11 @@
 import { stateMachineInterfaces, servicesInterfaces, injectionNames, unifierInterfaces } from "assistant-source";
 import { needs } from "assistant-validations";
+import { authenticate } from "assistant-authentication";
 import { injectable, inject } from "inversify";
 
 import { ApplicationState } from "./application";
 import { AbbrevationsMixin } from "./mixins/abbrevations";
+import { OAuthStrategy } from "../auth-strategies/oauth";
 
 /**
  * GameState
@@ -14,6 +16,7 @@ import { AbbrevationsMixin } from "./mixins/abbrevations";
  */
 
 @injectable()
+// You want some OAuth/Pin/whatever authentication? Just add: @authenticate(OAuthStrategy) and have a look at auth-strategies/oauth
 export class GameState extends AbbrevationsMixin(ApplicationState) {
   currentSessionFactory: () => servicesInterfaces.Session;
   entities: unifierInterfaces.EntityDictionary;
