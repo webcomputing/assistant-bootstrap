@@ -39,5 +39,54 @@ describe("GameState", function() {
         done();
       });
     });
+
+    describe("guessNumberIntent", function() {
+      const myNumber = 2;
+
+      beforeEach(function() {
+        this.prepareGuessing = async (guessedNumber = undefined) => {
+          // Derive additional extractions
+          let additionalExtractions = typeof guessedNumber === "undefined" ? {} : { entities: { guessedNumber: guessedNumber } };
+
+          // Prepare request
+          responseHandler = await (this.platforms.alexa as unifierInterfaces.PlatformSpecHelper).pretendIntentCalled("guessNumber", false, additionalExtractions);
+
+          // Store myNumber into session
+          currentSessionFactory = this.container.inversifyInstance.get(injectionNames.current.sessionFactory);
+          await currentSessionFactory().set("myNumber", myNumber.toString());
+
+          // Run state machine and return responseHandler
+          await this.specHelper.runMachine("GameState");
+          return responseHandler;
+        }
+      });
+
+      describe("when no number was passed", function() {
+        it("returns prompt message", async function(done) {
+          let responseHandler = await this.prepareGuessing();
+          expect(responseHandler.endSession).toBeFalsy();
+          expect(this.translateValuesFor("promptState.guessedNumber")).toContain(responseHandler.voiceMessage);
+          done();
+        });
+      });
+
+      describe("when guessed number was correct", function() {
+        it("tells user that he or she won", async function(done) {
+          let responseHandler = await this.prepareGuessing(myNumber);
+          expect(responseHandler.endSession).toBeTruthy();
+          expect(this.translateValuesFor("gameState.guessNumberIntent.success")).toContain(responseHandler.voiceMessage);
+          done();
+        });
+      });
+
+      describe("when guessed number was not correct", function() {
+        it("tells user that he or she lost", async function(done) {
+          let responseHandler = await this.prepareGuessing(myNumber + 1);
+          expect(responseHandler.endSession).toBeTruthy();
+          expect(this.translateValuesFor("gameState.guessNumberIntent.failure", { myNumber: myNumber })).toContain(responseHandler.voiceMessage);
+          done();
+        });
+      });
+    });
   })
 });
