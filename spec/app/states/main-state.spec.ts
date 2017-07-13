@@ -25,5 +25,23 @@ describe("MainState", function() {
         done();
       });
     });
+
+    describe("helpGenericIntent", function() {
+      it("tries to help", async function(done) {
+        let responseHandler = await this.callIntent(unifierInterfaces.GenericIntent.Help) as unifierInterfaces.MinimalResponseHandler;
+        expect(responseHandler.endSession).toBeFalsy();
+        expect(this.translateValuesFor("mainState.helpGenericIntent")).toContain(responseHandler.voiceMessage);
+        done();
+      });
+    });
+
+    describe("cancelGenericIntent", function() {
+      it("says generic goodbye and ends session", async function(done) {
+        let responseHandler = await this.callIntent(unifierInterfaces.GenericIntent.Cancel) as unifierInterfaces.MinimalResponseHandler;
+        expect(responseHandler.endSession).toBeTruthy();
+        expect(this.translateValuesFor("root.cancelGenericIntent")).toContain(responseHandler.voiceMessage);
+        done();
+      });
+    });
   })
 });
