@@ -42,6 +42,19 @@ export class GameState extends AbbrevationsMixin(ApplicationState) {
     let sessionContainedValue = await this.currentSessionFactory().get("myNumber");
     let myNumber = parseInt(sessionContainedValue);
 
-    
+    if (myNumber === guessedNumber) return this.endSessionWith(this.t(".success"));
+    return this.endSessionWith(this.t(".failure", { myNumber: myNumber }));
+  }
+
+  /**
+   * This acts here as generic utterance fallback: As long as the user gave me a number, he probably meant guessNumberIntent(). 
+   * Otherwise, just use the old unhandledIntent from ApplicationState.
+   */
+  unhandledIntent(machine: stateMachineInterfaces.Transitionable) {
+    if (this.entities.contains("guessedNumber")) {
+      return machine.handleIntent("guessNumber");
+    } else {
+      return super.unhandledIntent(machine);
+    }
   }
 }

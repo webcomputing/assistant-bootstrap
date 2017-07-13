@@ -14,6 +14,13 @@
     "unhandledIntent": [
       "Sorry, didn't understand you. Give me a number between 1 and 10, please!",
       "You cannot do that here. What number do you guess am I thinking of?"
-    ]
+    ],
+    "guessNumberIntent": {
+      "success": "You are right! Congratulations!",
+      "failure": "{Sorry!|No luck for you today!|I'm sorry!|Nope!|Maybe next time!|} {The number I was thinking of|My number} was {{myNumber}}."
+    }
+  },
+  "promptState": {
+    "guessedNumber": "What number am I thinking of?"
   }
 }

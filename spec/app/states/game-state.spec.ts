@@ -1,6 +1,7 @@
 import { unifierInterfaces, injectionNames, servicesInterfaces } from "assistant-source";
 
 describe("GameState", function() {
+  const myNumber = 2;
   let responseHandler: unifierInterfaces.MinimalResponseHandler;
   let currentSessionFactory: () => servicesInterfaces.Session;
 
@@ -11,14 +12,41 @@ describe("GameState", function() {
         await this.specHelper.runMachine("GameState");
         return responseHandler;
       };
+
+      this.prepareGuessing = async (guessedNumber = undefined) => {
+        // Derive additional extractions
+        let additionalExtractions = typeof guessedNumber === "undefined" ? {} : { entities: { guessedNumber: guessedNumber } };
+
+        // Prepare request
+        responseHandler = await (this.platforms.alexa as unifierInterfaces.PlatformSpecHelper).pretendIntentCalled("guessNumber", false, additionalExtractions);
+
+        // Store myNumber into session
+        currentSessionFactory = this.container.inversifyInstance.get(injectionNames.current.sessionFactory);
+        await currentSessionFactory().set("myNumber", myNumber.toString());
+
+        // Run state machine and return responseHandler
+        await this.specHelper.runMachine("GameState");
+        return responseHandler;
+      }
     });
 
     describe("unhandledIntent", function() {
-      it("tries to help", async function(done) {
-        let responseHandler = await this.callIntent("notExistingIntent");
-        expect(responseHandler.endSession).toBeFalsy();
-        expect(this.translateValuesFor("gameState.unhandledIntent")).toContain(responseHandler.voiceMessage);
-        done();
+      describe("with no number passed", function() {
+        it("tries to help", async function(done) {
+          let responseHandler = await this.callIntent("notExistingIntent");
+          expect(responseHandler.endSession).toBeFalsy();
+          expect(this.translateValuesFor("gameState.unhandledIntent")).toContain(responseHandler.voiceMessage);
+          done();
+        });
+      })
+      
+      describe("with a number passed", function() {
+        it("just acts as guessNumberIntent (here: success)", async function(done) {
+          let responseHandler = await this.prepareGuessing(myNumber);
+          expect(responseHandler.endSession).toBeTruthy();
+          expect(this.translateValuesFor("gameState.guessNumberIntent.success")).toContain(responseHandler.voiceMessage);
+          done();
+        });
       });
     });
 
@@ -41,26 +69,6 @@ describe("GameState", function() {
     });
 
     describe("guessNumberIntent", function() {
-      const myNumber = 2;
-
-      beforeEach(function() {
-        this.prepareGuessing = async (guessedNumber = undefined) => {
-          // Derive additional extractions
-          let additionalExtractions = typeof guessedNumber === "undefined" ? {} : { entities: { guessedNumber: guessedNumber } };
-
-          // Prepare request
-          responseHandler = await (this.platforms.alexa as unifierInterfaces.PlatformSpecHelper).pretendIntentCalled("guessNumber", false, additionalExtractions);
-
-          // Store myNumber into session
-          currentSessionFactory = this.container.inversifyInstance.get(injectionNames.current.sessionFactory);
-          await currentSessionFactory().set("myNumber", myNumber.toString());
-
-          // Run state machine and return responseHandler
-          await this.specHelper.runMachine("GameState");
-          return responseHandler;
-        }
-      });
-
       describe("when no number was passed", function() {
         it("returns prompt message", async function(done) {
           let responseHandler = await this.prepareGuessing();
