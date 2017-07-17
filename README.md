@@ -1,3 +1,5 @@
+<p align="center"><img src="http://www.antonius-ostermann.de/assets/images/assistantjs.png"></p>
+
 # AssistantJS Bootstrap Repository
 This repository initializes an example "number guessing" assistantJS application. It is configured to use plenty of available assistantJS modules and runs on alexa, api.ai and google assistant. By cloning this repository, it should be easy for you to start building your own assistantJS application. Happy coding!
 
