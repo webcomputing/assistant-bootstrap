@@ -28,7 +28,14 @@ let alexaConfiguration: AlexaConfguration = {
    */
   parameters: {
     "number": "AMAZON.Number"
-  }
+  },
+  
+  /**
+   * assistant-alexa uses the alexa-verifier to verify incomming requests have been sent by Amazon. But sometimes this
+   * makes problems, especially if testing with the developer console. With this option, you can enable or disable
+   * alexa-verifier.
+   */
+  useVerifier: false
 };
 
 // Same applies to api.ai
