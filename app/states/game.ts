@@ -41,7 +41,7 @@ export class GameState extends AbbrevationsMixin(ApplicationState) {
   @needs("guessedNumber")
   async guessNumberIntent() {
     // Retrieve myNumber from session and given number from entity dictionary
-    let guessedNumber = parseInt(this.entities.get("guessedNumber"));
+    let guessedNumber = parseInt(this.entities.get("guessedNumber") as string);
     let sessionContainedValue = await this.currentSessionFactory().get("myNumber");
     let myNumber = parseInt(sessionContainedValue);
 
@@ -53,7 +53,7 @@ export class GameState extends AbbrevationsMixin(ApplicationState) {
    * This acts here as generic utterance fallback: As long as the user gave me a number, he probably meant guessNumberIntent(). 
    * Otherwise, just use the old unhandledIntent from ApplicationState.
    */
-  unhandledIntent(machine: stateMachineInterfaces.Transitionable) {
+  unhandledGenericIntent(machine: stateMachineInterfaces.Transitionable) {
     if (this.entities.contains("guessedNumber")) {
       return machine.handleIntent("guessNumber");
     } else {

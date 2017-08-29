@@ -1,16 +1,12 @@
-import {  unifierInterfaces, i18nInterfaces,  injectionNames, stateMachineInterfaces } from "assistant-source";
+import {  unifierInterfaces, i18nInterfaces,  injectionNames, stateMachineInterfaces, BaseState } from "assistant-source";
 import { injectable, unmanaged } from "inversify";
 
 import { ApplicationState as ApplicationStateInterface } from "../interfaces";
 
 @injectable()
-export class ApplicationState implements ApplicationStateInterface {
-  responseFactory: unifierInterfaces.ResponseFactory;
-  translateHelper: i18nInterfaces.TranslateHelper;
-
+export class ApplicationState extends BaseState implements ApplicationStateInterface {
   constructor(@unmanaged() responseFactory, @unmanaged() translateHelper) {
-    this.responseFactory = responseFactory;
-    this.translateHelper = translateHelper;
+    super(responseFactory, translateHelper);
   }
 
   /** 
