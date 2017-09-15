@@ -56,6 +56,9 @@ export class GameState extends AbbrevationsMixin(ApplicationState) {
   unhandledGenericIntent(machine: stateMachineInterfaces.Transitionable) {
     if (this.entities.contains("guessedNumber")) {
       return machine.handleIntent("guessNumber");
+    } else if(this.entities.contains("number")) {
+      this.entities.set("guessedNumber", this.entities.get("number"));
+      return machine.handleIntent("guessNumber");
     } else {
       return super.unhandledIntent(machine);
     }
