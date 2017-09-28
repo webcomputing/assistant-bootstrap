@@ -1,7 +1,7 @@
 {
   "name": "assistant-bootstrap",
   "version": "0.1.0",
-  "description": "Getting-Started-Repository for assistant.",
+  "description": "Bootstrapping AssistantJS",
   "main": "js/index.js",
   "scripts": {
     "test": "jasmine-ts spec/**/*.spec.ts"
@@ -23,9 +23,5 @@
     "typescript": "2.3.4"
   },
   "author": "Antonius Ostermann",
-  "repository": "https://github.com/webcomputing/assistant-bootstrap",
-  "license": "ISC",
-  "publishConfig": {
-    "registry": "http://sinopia.verstehe.local:4873"
-  }
+  "repository": "https://github.com/webcomputing/assistant-bootstrap"
 }
