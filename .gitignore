@@ -3,3 +3,4 @@ js
 node_modules
 builds/*
 !builds/.keep
+package-lock.json
