@@ -41,6 +41,11 @@ let alexaConfiguration: AlexaConfguration = {
 // Same applies to api.ai
 let apiAiConfiguration: ApiAiConfiguration = {
   route: "/apiai",
+  // Go to the "fulfillment" tab in your dialogflow console and add some secret header keys and (complex) values
+  authenticationHeaders: {
+    "MY-FIRST-SECRET-HEADER": "MY-VERY-SECRET-VALUE",
+    "MY-SECOND-SECRET-HEADER": "MY-SECOND-VERY-SECRET-VALUE",
+  },
   entities: {
     "number": "@sys.number"
   }
