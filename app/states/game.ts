@@ -1,4 +1,10 @@
-import { stateMachineInterfaces, servicesInterfaces, injectionNames, unifierInterfaces } from "assistant-source";
+import {
+  stateMachineInterfaces,
+  servicesInterfaces,
+  injectionNames,
+  i18nInterfaces,
+  unifierInterfaces
+} from "assistant-source";
 import { needs } from "assistant-validations";
 import { authenticate } from "assistant-authentication";
 import { injectable, inject } from "inversify";
@@ -22,9 +28,9 @@ export class GameState extends AbbrevationsMixin(ApplicationState) {
   entities: unifierInterfaces.EntityDictionary;
 
   constructor(
-    @inject(injectionNames.current.responseFactory) responseFactory, 
-    @inject(injectionNames.current.translateHelper) translateHelper,
-    @inject(injectionNames.current.sessionFactory) sessionFactory,
+    @inject(injectionNames.current.responseFactory) responseFactory: unifierInterfaces.ResponseFactory,
+    @inject(injectionNames.current.translateHelper) translateHelper: i18nInterfaces.TranslateHelper,
+    @inject(injectionNames.current.sessionFactory) sessionFactory: () => servicesInterfaces.Session,
     @inject(injectionNames.current.entityDictionary) entities
     ) {
     super(responseFactory, translateHelper);

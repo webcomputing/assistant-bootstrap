@@ -5,7 +5,10 @@ import { ApplicationState as ApplicationStateInterface } from "../interfaces";
 
 @injectable()
 export class ApplicationState extends BaseState implements ApplicationStateInterface {
-  constructor(@unmanaged() responseFactory, @unmanaged() translateHelper) {
+  constructor(
+    @unmanaged() public responseFactory: unifierInterfaces.ResponseFactory,
+    @unmanaged() public translateHelper: i18nInterfaces.TranslateHelper
+  ) {
     super(responseFactory, translateHelper);
   }
 

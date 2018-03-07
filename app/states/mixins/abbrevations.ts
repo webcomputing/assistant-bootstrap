@@ -1,8 +1,10 @@
-import { Constructor, Mixin } from "assistant-source";
+import { Constructor, Mixin, unifierInterfaces, i18nInterfaces } from "assistant-source";
 import { ApplicationState, AbbrevationsMixinInstance } from "../../interfaces";
 
 export function AbbrevationsMixin<T extends Constructor<ApplicationState>>(superState: T): Mixin<AbbrevationsMixinInstance> & T {
   return class extends superState {
+    responseFactory: unifierInterfaces.ResponseFactory;
+    translateHelper: i18nInterfaces.TranslateHelper;
     prompt(text: string) {
       this.responseFactory.createVoiceResponse().prompt(text);
     }
