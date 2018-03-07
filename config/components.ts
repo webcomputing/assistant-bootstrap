@@ -3,6 +3,8 @@ import { i18nInterfaces, unifierInterfaces, servicesInterfaces } from "assistant
 import { Configuration as AlexaConfguration } from "assistant-alexa";
 import { Configuration as ApiAiConfiguration } from "assistant-apiai";
 
+declare let process: any;
+
 let unifierConfiguration: unifierInterfaces.Configuration = {
   /* 
    * Register all used entities here and group them by entity type. 
@@ -67,7 +69,7 @@ let i18nConfiguration: i18nInterfaces.Configuration = {
 
 let servicesConfiguration: servicesInterfaces.Configuration = {
   // In case you need to change your redis connection data, this is the place to go
-  redisClient: new RedisClient({})
+  redisClient: new RedisClient({}) // for configuration options, see "redis" npm module
 }
 
 /*
@@ -79,5 +81,5 @@ export default {
   "apiai": apiAiConfiguration,
   "core:i18n": i18nConfiguration,
   "core:unifier": unifierConfiguration,
-  "core:services": servicesInterfaces
+  "core:services": servicesConfiguration
 }
