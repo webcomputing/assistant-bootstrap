@@ -21,11 +21,11 @@ describe("MainState", function() {
       });
     });
 
-    describe("unhandledIntent", function() {
+    describe("unhandledGenericIntent", function() {
       it("tries to help", async function(done) {
         let responseHandler = await this.callIntent("notExistingIntent");
         expect(responseHandler.endSession).toBeFalsy();
-        expect(this.translateValuesFor("mainState.unhandledIntent")).toContain(responseHandler.voiceMessage);
+        expect(this.translateValuesFor("mainState.unhandledGenericIntent")).toContain(responseHandler.voiceMessage);
         done();
       });
     });

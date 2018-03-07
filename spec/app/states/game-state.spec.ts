@@ -30,12 +30,12 @@ describe("GameState", function() {
       }
     });
 
-    describe("unhandledIntent", function() {
+    describe("unhandledGenericIntent", function() {
       describe("with no number passed", function() {
         it("tries to help", async function(done) {
           let responseHandler = await this.callIntent("notExistingIntent");
           expect(responseHandler.endSession).toBeFalsy();
-          expect(this.translateValuesFor("gameState.unhandledIntent")).toContain(responseHandler.voiceMessage);
+          expect(this.translateValuesFor("gameState.unhandledGenericIntent")).toContain(responseHandler.voiceMessage);
           done();
         });
       })
