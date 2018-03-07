@@ -14,10 +14,10 @@ export class MainState extends ApplicationState {
   currentSessionFactory: () => servicesInterfaces.Session;
 
   constructor(
-    @inject(injectionNames.current.responseFactory) responseFactory, 
-    @inject(injectionNames.current.translateHelper) translateHelper,
-    @inject(injectionNames.current.sessionFactory) sessionFactory
-    ) {
+    @inject(injectionNames.current.responseFactory) responseFactory: unifierInterfaces.ResponseFactory,
+    @inject(injectionNames.current.translateHelper) translateHelper: i18nInterfaces.TranslateHelper,
+    @inject(injectionNames.current.sessionFactory) sessionFactory: () => servicesInterfaces.Session
+  ) {
     super(responseFactory, translateHelper);
     this.currentSessionFactory = sessionFactory;
   }
