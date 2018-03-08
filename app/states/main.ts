@@ -1,5 +1,11 @@
-import { stateMachineInterfaces, unifierInterfaces, i18nInterfaces, servicesInterfaces, injectionNames } from "assistant-source";
-import { injectable, inject } from "inversify";
+import {
+  Transitionable,
+  injectionNames,
+  Session,
+  State,
+  CurrentSessionFactory
+} from "assistant-source";
+import { injectable, inject, unmanaged } from "inversify";
 
 import { ApplicationState } from "./application";
 
@@ -11,14 +17,13 @@ import { ApplicationState } from "./application";
 
 @injectable()
 export class MainState extends ApplicationState {
-  currentSessionFactory: () => servicesInterfaces.Session;
+  currentSessionFactory: CurrentSessionFactory;
 
   constructor(
-    @inject(injectionNames.current.responseFactory) responseFactory: unifierInterfaces.ResponseFactory,
-    @inject(injectionNames.current.translateHelper) translateHelper: i18nInterfaces.TranslateHelper,
-    @inject(injectionNames.current.sessionFactory) sessionFactory: () => servicesInterfaces.Session
+    @inject(injectionNames.current.stateSetupSet) stateSetupSet: State.SetupSet,
+    @inject("core:unifier:current-session-factory") sessionFactory: CurrentSessionFactory,
   ) {
-    super(responseFactory, translateHelper);
+    super(stateSetupSet);    
     this.currentSessionFactory = sessionFactory;
   }
 
@@ -36,7 +41,7 @@ export class MainState extends ApplicationState {
    * have a "GenericIntent" prefix, but an "Intent" prefix. In difference to generic intents, you have to provide utterances for custom intents.
    * @param machine the state machine, can be used for transitions and redirects. Every intent method gets this parameter.
    */
-  async startGameIntent(machine: stateMachineInterfaces.Transitionable) {
+  async startGameIntent(machine: Transitionable) {
     // Think of a number between 1 and 10 (inclusive)
     let myNumber = Math.floor(Math.random() * 10) + 1;
 

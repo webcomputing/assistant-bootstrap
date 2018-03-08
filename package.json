@@ -7,13 +7,13 @@
     "test": "jasmine-ts spec/**/*.spec.ts"
   },
   "dependencies": {
-    "assistant-alexa": "^0.2.0",
-    "assistant-apiai": "^0.2.0",
-    "assistant-authentication": "^0.1.0",
-    "assistant-generic-utterances": "^0.4.0",
-    "assistant-google": "^0.2.0",
-    "assistant-source": "^0.2.0",
-    "assistant-validations": "^0.2.0"
+    "assistant-alexa": "^0.3.0",
+    "assistant-apiai": "^0.3.0",
+    "assistant-authentication": "^0.3.0",
+    "assistant-generic-utterances": "^0.5.0",
+    "assistant-google": "^0.3.0",
+    "assistant-source": "^0.3.0",
+    "assistant-validations": "^0.3.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.5.48",

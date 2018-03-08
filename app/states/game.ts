@@ -1,13 +1,15 @@
 import {
-  stateMachineInterfaces,
-  servicesInterfaces,
   injectionNames,
-  i18nInterfaces,
-  unifierInterfaces
+  EntityDictionary,
+  Session,
+  Transitionable,
+  State,
+  CurrentSessionFactory,
+  PlatformGenerator
 } from "assistant-source";
 import { needs } from "assistant-validations";
 import { authenticate } from "assistant-authentication";
-import { injectable, inject } from "inversify";
+import { injectable, inject, unmanaged } from "inversify";
 
 import { ApplicationState } from "./application";
 import { AbbrevationsMixin } from "./mixins/abbrevations";
@@ -24,18 +26,15 @@ import { OAuthStrategy } from "../auth-strategies/oauth";
 @injectable()
 // You want some OAuth/Pin/whatever authentication? Just add: @authenticate(OAuthStrategy) and have a look at auth-strategies/oauth
 export class GameState extends AbbrevationsMixin(ApplicationState) {
-  currentSessionFactory: () => servicesInterfaces.Session;
-  entities: unifierInterfaces.EntityDictionary;
+  currentSessionFactory: CurrentSessionFactory;
 
   constructor(
-    @inject(injectionNames.current.responseFactory) responseFactory: unifierInterfaces.ResponseFactory,
-    @inject(injectionNames.current.translateHelper) translateHelper: i18nInterfaces.TranslateHelper,
-    @inject(injectionNames.current.sessionFactory) sessionFactory: () => servicesInterfaces.Session,
-    @inject(injectionNames.current.entityDictionary) entities
-    ) {
-    super(responseFactory, translateHelper);
+    @inject(injectionNames.current.stateSetupSet) stateSetupSet: State.SetupSet,
+    @inject(injectionNames.current.sessionFactory) sessionFactory: CurrentSessionFactory,
+    @inject(injectionNames.current.entityDictionary) public entities: EntityDictionary
+  ) {
+    super(stateSetupSet);
     this.currentSessionFactory = sessionFactory;
-    this.entities = entities;
   }
 
   /**
@@ -59,10 +58,10 @@ export class GameState extends AbbrevationsMixin(ApplicationState) {
    * This acts here as generic utterance fallback: As long as the user gave me a number, he probably meant guessNumberIntent(). 
    * Otherwise, just use the old unhandledIntent from ApplicationState.
    */
-  unhandledGenericIntent(machine: stateMachineInterfaces.Transitionable) {
+  unhandledGenericIntent(machine: Transitionable) {
     if (this.entities.contains("guessedNumber")) {
       return machine.handleIntent("guessNumber");
-    } else if(this.entities.contains("number")) {
+    } else if (this.entities.contains("number")) {
       this.entities.set("guessedNumber", this.entities.get("number"));
       return machine.handleIntent("guessNumber");
     } else {

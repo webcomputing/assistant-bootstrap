@@ -3,7 +3,7 @@ import { descriptor as alexaDescriptor } from "assistant-alexa";
 import { descriptor as apiAiDescriptor } from "assistant-apiai";
 import { descriptor as googleDescriptor } from "assistant-google";
 import { descriptor as authenticationDescriptor, AuthenticationSetup } from "assistant-authentication";
-import { descriptor as validationsDescriptor, PromptState } from "assistant-validations";
+import { descriptor as validationsDescriptor } from "assistant-validations";
 import { descriptor as genericUtterancesDescriptor } from "assistant-generic-utterances";
 import components from "./config/components";
 
@@ -37,7 +37,6 @@ export function initializeSetups (assistantJs: AssistantJSSetup, stateMachineSet
 
   // Register all states and strategies
   stateMachineSetup.registerByConvention(addOnly);
-  stateMachineSetup.addState(PromptState);
   authenticationSetup.registerByConvention(addOnly);
 }
 

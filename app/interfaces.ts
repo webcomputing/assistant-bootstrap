@@ -1,11 +1,10 @@
-import { stateMachineInterfaces, unifierInterfaces, i18nInterfaces, servicesInterfaces } from "assistant-source";
+import { State, ResponseFactory, TranslateHelper, servicesInterfaces, BaseState } from "assistant-source";
 
-export interface ApplicationState extends stateMachineInterfaces.State {
-  responseFactory: unifierInterfaces.ResponseFactory;
-  translateHelper: i18nInterfaces.TranslateHelper;
+export interface ApplicationState extends BaseState {
+  
 }
 
-export interface AbbrevationsMixinInstance extends ApplicationState, i18nInterfaces.TranslateHelper {
+export interface AbbrevationsMixinInstance extends ApplicationState, TranslateHelper {
   prompt(text: string): void;
   endSessionWith(text: string): void;
 }
