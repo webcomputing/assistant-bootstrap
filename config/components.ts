@@ -53,16 +53,17 @@ const unifierConfiguration: UnifierConfiguration = {
 const alexaConfiguration: AlexaConfiguration = {
   // You find your application id in the amazon developers console. Paste it here!
   applicationID: "YOUR-APPLICATION-ID",
-
   // Make sure that you configure this route in your amazon developers console (https url), too!
   route: "/alexa",
-
   /**
    * assistant-alexa uses the alexa-verifier to verify incomming requests have been sent by Amazon. But sometimes this
    * makes problems, especially if testing with the developer console. With this option, you can enable or disable
    * alexa-verifier.
    */
-  useVerifier: false
+  useVerifier: false,
+  entities: {
+    "number": "AMAZON.NUMBER"
+  }
 
 }
 
