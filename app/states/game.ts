@@ -1,19 +1,9 @@
-import {
-  injectionNames,
-  EntityDictionary,
-  Session,
-  Transitionable,
-  State,
-  CurrentSessionFactory,
-  PlatformGenerator
-} from "assistant-source";
+import { CurrentSessionFactory, EntityDictionary, injectionNames, State, Transitionable } from "assistant-source";
 import { needs } from "assistant-validations";
-import { authenticate } from "assistant-authentication";
-import { injectable, inject, unmanaged } from "inversify";
-
+import { inject, injectable } from "inversify";
 import { ApplicationState } from "./application";
 import { AbbrevationsMixin } from "./mixins/abbrevations";
-import { OAuthStrategy } from "../auth-strategies/oauth";
+
 
 /**
  * GameState

@@ -1,12 +1,7 @@
-import {
-  injectionNames,
-  Transitionable,
-  BaseState,
-  State
-} from "assistant-source";
+import { BaseState, State, Transitionable } from "assistant-source";
 import { injectable, unmanaged } from "inversify";
-
 import { ApplicationState as ApplicationStateInterface } from "../interfaces";
+
 
 @injectable()
 export class ApplicationState extends BaseState implements ApplicationStateInterface {

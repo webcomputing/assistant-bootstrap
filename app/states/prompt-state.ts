@@ -1,6 +1,6 @@
-import { injectable, inject, unmanaged } from "inversify";
-import { State, EntityDictionary, CurrentSessionFactory, PlatformGenerator, injectionNames } from "assistant-source";
-import { PromptStateMixinRequirements, PromptStateMixin } from "assistant-validations";
+import { CurrentSessionFactory, EntityDictionary, injectionNames, PlatformGenerator, State } from "assistant-source";
+import { PromptStateMixin, PromptStateMixinRequirements } from "assistant-validations";
+import { inject, injectable, unmanaged } from "inversify";
 import { ApplicationState } from "./application";
 
 /**

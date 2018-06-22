@@ -2,7 +2,6 @@ import { RedisClient } from "redis";
 import {
   AssistantJSConfiguration,
   I18nConfiguration,
-  RootConfiguration,
   ServicesConfiguration,
   UnifierConfiguration
 } from "assistant-source";
@@ -51,8 +50,6 @@ const unifierConfiguration: UnifierConfiguration = {
 }
 
 const alexaConfiguration: AlexaConfiguration = {
-  // Skill's invocation name to begin an interaction with.
-  invocationName: "bootstrap",
   // You find your application id in the amazon developers console. Paste it here!
   applicationID: "YOUR-APPLICATION-ID",
   // Make sure that you configure this route in your amazon developers console (https url), too!

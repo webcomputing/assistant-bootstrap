@@ -1,13 +1,7 @@
-import {
-  Transitionable,
-  injectionNames,
-  Session,
-  State,
-  CurrentSessionFactory
-} from "assistant-source";
-import { injectable, inject, unmanaged } from "inversify";
-
+import { CurrentSessionFactory, injectionNames, State, Transitionable } from "assistant-source";
+import { inject, injectable } from "inversify";
 import { ApplicationState } from "./application";
+
 
 /**
  * This is your MainState.
