@@ -32,7 +32,7 @@ This repository initializes an example "number guessing" assistantJS application
 
 ### Run on google assistant / dialogflow
 11. Import the generated zip archive into dialogflow
-12. Copy authentication headers from `config/components.ts` and paste them into fulfilment configuration
+12. Copy authentication headers from `config/components.ts` and paste them into fulfillment configuration
 13. Paste your ngrok https url (step (6)) into the fulfillment configuration, but don't forget to add the configured route (see `config/components.ts`), which defaults to "/apiai"
 
 ## Debug

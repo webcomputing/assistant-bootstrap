@@ -1,10 +1,8 @@
-import { TranslateHelper, BaseState } from "assistant-source";
+import { TranslateHelper, BaseState, Transitionable } from "assistant-source";
 
 export interface ApplicationState extends BaseState {
   
 }
-
-export interface AbbrevationsMixinInstance extends ApplicationState, TranslateHelper {
-  prompt(text: string): void;
-  endSessionWith(text: string): void;
+export interface BackIntentMixinInstance extends ApplicationState {
+  backIntent(machine: Transitionable): void | Promise<void>
 }

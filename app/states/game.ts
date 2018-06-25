@@ -2,20 +2,20 @@ import { CurrentSessionFactory, EntityDictionary, injectionNames, State, Transit
 import { needs } from "assistant-validations";
 import { inject, injectable } from "inversify";
 import { ApplicationState } from "./application";
-import { AbbrevationsMixin } from "./mixins/abbrevations";
+import { BackIntentMixin } from "./mixins/backIntent";
 
 
 /**
  * GameState
  * If the conversation is in this state, the game has been started. This means we already thought of a number (stored in session)
  * and now compare this number with the given one.
- * Also have a look at how a mixin is used here: Thanks to AbbrevationsMixin, we can use this.prompt, this.endSession and this.t directly.
+ * Also have a look at how a mixin is used here: Thanks to BackIntentMixin, we can go back to the main state at any time.
  * Mixins can be especially helpful to deal with intents which are common in many states, the same way ApplicationState does it here.
  */
 
 @injectable()
 // You want some OAuth/Pin/whatever authentication? Just add: @authenticate(OAuthStrategy) and have a look at auth-strategies/oauth
-export class GameState extends AbbrevationsMixin(ApplicationState) {
+export class GameState extends BackIntentMixin(ApplicationState) {
   currentSessionFactory: CurrentSessionFactory;
 
   constructor(

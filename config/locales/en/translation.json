@@ -18,7 +18,10 @@
     "guessNumberIntent": {
       "success": "You are right! Congratulations!",
       "failure": "{Sorry!|No luck for you today!|I'm sorry!|Nope!|Maybe next time!|} {The number I was thinking of|My number} was {{myNumber}}."
-    }
+    },
+    "backIntent": [
+      "Go back to main menu. Start a game by saying 'start game'!"
+    ]
   },
   "promptState": {
     "guessedNumber": "What number am I thinking of?"
