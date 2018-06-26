@@ -9,5 +9,9 @@
     "{I guess|I think|} {it|your number|} {is|was} {{guessedNumber}}",
     "Is your number {{guessedNumber}}",
     "{Maybe|Possibly|Guess|Think} {{guessedNumber}}"
+  ],
+  "backIntent": [
+    "Back",
+    "Return"
   ]
 }

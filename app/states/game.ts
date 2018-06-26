@@ -1,35 +1,30 @@
-import { stateMachineInterfaces, servicesInterfaces, injectionNames, unifierInterfaces } from "assistant-source";
+import { CurrentSessionFactory, EntityDictionary, injectionNames, State, Transitionable } from "assistant-source";
 import { needs } from "assistant-validations";
-import { authenticate } from "assistant-authentication";
-import { injectable, inject } from "inversify";
-
+import { inject, injectable } from "inversify";
 import { ApplicationState } from "./application";
-import { AbbrevationsMixin } from "./mixins/abbrevations";
-import { OAuthStrategy } from "../auth-strategies/oauth";
+import { BackIntentMixin } from "./mixins/backIntent";
+
 
 /**
  * GameState
  * If the conversation is in this state, the game has been started. This means we already thought of a number (stored in session)
  * and now compare this number with the given one.
- * Also have a look at how a mixin is used here: Thanks to AbbrevationsMixin, we can use this.prompt, this.endSession and this.t directly.
+ * Also have a look at how a mixin is used here: Thanks to BackIntentMixin, we can go back to the main state at any time.
  * Mixins can be especially helpful to deal with intents which are common in many states, the same way ApplicationState does it here.
  */
 
 @injectable()
 // You want some OAuth/Pin/whatever authentication? Just add: @authenticate(OAuthStrategy) and have a look at auth-strategies/oauth
-export class GameState extends AbbrevationsMixin(ApplicationState) {
-  currentSessionFactory: () => servicesInterfaces.Session;
-  entities: unifierInterfaces.EntityDictionary;
+export class GameState extends BackIntentMixin(ApplicationState) {
+  currentSessionFactory: CurrentSessionFactory;
 
   constructor(
-    @inject(injectionNames.current.responseFactory) responseFactory, 
-    @inject(injectionNames.current.translateHelper) translateHelper,
-    @inject(injectionNames.current.sessionFactory) sessionFactory,
-    @inject(injectionNames.current.entityDictionary) entities
-    ) {
-    super(responseFactory, translateHelper);
+    @inject(injectionNames.current.stateSetupSet) stateSetupSet: State.SetupSet,
+    @inject(injectionNames.current.sessionFactory) sessionFactory: CurrentSessionFactory,
+    @inject(injectionNames.current.entityDictionary) public entities: EntityDictionary
+  ) {
+    super(stateSetupSet);
     this.currentSessionFactory = sessionFactory;
-    this.entities = entities;
   }
 
   /**
@@ -53,10 +48,10 @@ export class GameState extends AbbrevationsMixin(ApplicationState) {
    * This acts here as generic utterance fallback: As long as the user gave me a number, he probably meant guessNumberIntent(). 
    * Otherwise, just use the old unhandledIntent from ApplicationState.
    */
-  unhandledGenericIntent(machine: stateMachineInterfaces.Transitionable) {
+  unhandledGenericIntent(machine: Transitionable) {
     if (this.entities.contains("guessedNumber")) {
       return machine.handleIntent("guessNumber");
-    } else if(this.entities.contains("number")) {
+    } else if (this.entities.contains("number")) {
       this.entities.set("guessedNumber", this.entities.get("number"));
       return machine.handleIntent("guessNumber");
     } else {

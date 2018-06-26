@@ -1,12 +1,12 @@
-import {  unifierInterfaces, i18nInterfaces,  injectionNames, stateMachineInterfaces, BaseState } from "assistant-source";
+import { BaseState, State, Transitionable } from "assistant-source";
 import { injectable, unmanaged } from "inversify";
-
 import { ApplicationState as ApplicationStateInterface } from "../interfaces";
+
 
 @injectable()
 export class ApplicationState extends BaseState implements ApplicationStateInterface {
-  constructor(@unmanaged() responseFactory, @unmanaged() translateHelper) {
-    super(responseFactory, translateHelper);
+  constructor(@unmanaged() stateSetupSet: State.SetupSet) {
+    super(stateSetupSet);    
   }
 
   /** 
@@ -14,7 +14,7 @@ export class ApplicationState extends BaseState implements ApplicationStateInter
    * This is the only requirement for a class to be a valid state.
    * See also: stateMachineInterfaces.State, which extends ApplicationState
    */
-  unhandledIntent(machine: stateMachineInterfaces.Transitionable) {
+  unhandledIntent(machine: Transitionable) {
     // Although we are in a different state, all i18n conventions ("{state}.{intent}.{platform}.{key}") still apply
     this.responseFactory.createVoiceResponse().prompt(this.translateHelper.t());
   }

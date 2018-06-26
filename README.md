@@ -1,7 +1,7 @@
 <p align="center"><img src="http://www.antonius-ostermann.de/assets/images/assistantjs.png"></p>
 
 # AssistantJS Bootstrap Repository
-This repository initializes an example "number guessing" assistantJS application. It is configured to use plenty of available assistantJS modules and runs on alexa, api.ai and google assistant. By cloning this repository, it should be easy for you to start building your own assistantJS application. Happy coding!
+This repository initializes an example "number guessing" assistantJS application. It is configured to use plenty of available assistantJS modules and runs on alexa, dialogflow and google assistant. By cloning this repository, it should be easy for you to start building your own assistantJS application. Happy coding!
 
 ## Integrated optional assistantJS components
 1. assistant-alexa
@@ -30,9 +30,11 @@ This repository initializes an example "number guessing" assistantJS application
 9. Paste the generated intents and utterances into skill configuration
 10. Paste your ngrok https url (step (6)) into the skill configuration, but don't forget to add the configured route (see `config/components.ts`), which defaults to "/alexa"
 
-### Run on google assistant / api.ai
-11. Import the generated zip archive into api.ai
-12. Paste your ngrok https url (step (6)) into the fulfillment configuration, but don't forget to add the configured route (see `config/components.ts`), which defaults to "/apiai"
+### Run on google assistant / dialogflow
+11. Import the generated zip archive into dialogflow
+12. Copy authentication headers from `config/components.ts` and paste them into fulfillment configuration
+13. Paste your ngrok https url (step (6)) into the fulfillment configuration, but don't forget to add the configured route (see `config/components.ts`), which defaults to "/apiai"
 
 ## Debug
-Remember: assistantJS uses the awesome [debug module](https://www.npmjs.com/package/debug) to print log information if needed. Just start your assistantJS server or run your tests with `DEBUG=assistant` (or `DEBUG=assistant,assistant-alexa,assistant-authentication` - see above for components overview) to get debug information!
+Remember: assistantJS uses the awesome [bunyan module](https://www.npmjs.com/package/bunyan) to print log information if needed. You might want a global installation of bunyan to get the CLI in your PATH and be able to run `assistant s | bunyan` for pretty-printing logs
+ 

@@ -1,14 +1,14 @@
-import { unifierInterfaces, injectionNames, servicesInterfaces } from "assistant-source";
+import { injectionNames, PlatformSpecHelper, MinimalResponseHandler, Session, GenericIntent } from "assistant-source";
 
 describe("GameState", function() {
   const myNumber = 2;
-  let responseHandler: unifierInterfaces.MinimalResponseHandler;
-  let currentSessionFactory: () => servicesInterfaces.Session;
+  let responseHandler: MinimalResponseHandler;
+  let currentSessionFactory: () => Session;
 
   describe("on platform = alexa", function() {
     beforeEach(function() {
       this.callIntent = async (intent) => {
-        responseHandler = await (this.platforms.alexa as unifierInterfaces.PlatformSpecHelper).pretendIntentCalled(intent, false);
+        responseHandler = await (this.platforms.alexa as PlatformSpecHelper).pretendIntentCalled(intent, false);
         await this.specHelper.runMachine("GameState");
         return responseHandler;
       };
@@ -18,7 +18,7 @@ describe("GameState", function() {
         let additionalExtractions = typeof guessedNumber === "undefined" ? {} : { entities: { guessedNumber: guessedNumber } };
 
         // Prepare request
-        responseHandler = await (this.platforms.alexa as unifierInterfaces.PlatformSpecHelper).pretendIntentCalled("guessNumber", false, additionalExtractions);
+        responseHandler = await (this.platforms.alexa as PlatformSpecHelper).pretendIntentCalled("guessNumber", false, additionalExtractions);
 
         // Store myNumber into session
         currentSessionFactory = this.container.inversifyInstance.get(injectionNames.current.sessionFactory);
@@ -30,12 +30,12 @@ describe("GameState", function() {
       }
     });
 
-    describe("unhandledIntent", function() {
+    describe("unhandledGenericIntent", function() {
       describe("with no number passed", function() {
         it("tries to help", async function(done) {
           let responseHandler = await this.callIntent("notExistingIntent");
           expect(responseHandler.endSession).toBeFalsy();
-          expect(this.translateValuesFor("gameState.unhandledIntent")).toContain(responseHandler.voiceMessage);
+          expect(this.translateValuesFor("gameState.unhandledGenericIntent")).toContain(responseHandler.voiceMessage);
           done();
         });
       })
@@ -52,7 +52,7 @@ describe("GameState", function() {
 
     describe("helpGenericIntent", function() {
       it("tries to help", async function(done) {
-        let responseHandler = await this.callIntent(unifierInterfaces.GenericIntent.Help);
+        let responseHandler = await this.callIntent(GenericIntent.Help);
         expect(responseHandler.endSession).toBeFalsy();
         expect(this.translateValuesFor("gameState.helpGenericIntent")).toContain(responseHandler.voiceMessage);
         done();
@@ -61,7 +61,7 @@ describe("GameState", function() {
 
     describe("cancelGenericIntent", function() {
       it("says generic goodbye and ends session", async function(done) {
-        let responseHandler = await this.callIntent(unifierInterfaces.GenericIntent.Cancel);
+        let responseHandler = await this.callIntent(GenericIntent.Cancel);
         expect(responseHandler.endSession).toBeTruthy();
         expect(this.translateValuesFor("root.cancelGenericIntent")).toContain(responseHandler.voiceMessage);
         done();
