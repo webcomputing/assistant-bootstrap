@@ -4,5 +4,5 @@ export interface ApplicationState extends BaseState {
   
 }
 export interface BackIntentMixinInstance extends ApplicationState {
-  backIntent(machine: Transitionable): void | Promise<void>
+  backIntent(machine: Transitionable): Promise<void>
 }
