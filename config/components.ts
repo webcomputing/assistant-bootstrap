@@ -50,6 +50,12 @@ const unifierConfiguration: UnifierConfiguration = {
 }
 
 const alexaConfiguration: AlexaConfiguration = {
+  /**
+   * Users say a skill's invocation name to begin an interaction with your custom skill
+   * Your invocation name can contain only lower-case alphabetic characters, spaces between words, possessive apostrophes, or periods.
+   * Other characters like numbers must be spelled out. For example, "twenty one".
+   */
+  invocationName: "YOUR-INVOCATION-NAME",
   // You find your application id in the amazon developers console. Paste it here!
   applicationID: "YOUR-APPLICATION-ID",
   // Make sure that you configure this route in your amazon developers console (https url), too!
