@@ -56,9 +56,9 @@ const alexaConfiguration: AlexaConfiguration = {
    * Your invocation name can contain only lower-case alphabetic characters, spaces between words, possessive apostrophes, or periods.
    * Other characters like numbers must be spelled out. For example, "twenty one".
    */
-  invocationName: "YOUR-INVOCATION-NAME",
+  invocationName: "bootstrap",
   // You find your application id in the amazon developers console. Paste it here!
-  applicationID: "YOUR-APPLICATION-ID",
+  applicationID: "amzn1.ask.skill.f9c8f572-9255-42cc-934f-1c2707f80e56",
   // Make sure that you configure this route in your amazon developers console (https url), too!
   route: "/alexa",
   /**

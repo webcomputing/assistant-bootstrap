@@ -39,14 +39,11 @@ export class MainState extends ApplicationState {
     // Think of a number between 1 and 10 (inclusive)
     let myNumber = Math.floor(Math.random() * 10) + 1;
 
-    // Wait for both promises to finish, but run them in parallel
-    await Promise.all([
-      // Store this number into session and transition to new state      
-      this.currentSessionFactory().set("myNumber", myNumber.toString()),
+    // Store this number into session and transition to new state      
+    await this.currentSessionFactory().set("myNumber", myNumber.toString()),
 
-      // Transition to GameState
-      machine.transitionTo("GameState")
-    ]);
+    // Transition to GameState
+    await machine.transitionTo("GameState")
 
     // Send response 
     this.responseFactory.createVoiceResponse().prompt(this.translateHelper.t());
