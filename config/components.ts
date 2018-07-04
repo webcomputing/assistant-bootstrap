@@ -34,8 +34,9 @@ const i18nConfiguration: I18nConfiguration = {
 
 /** Configuration of AssistantJS's services component (interface = ServicesConfiguration) */
 const servicesConfiguration: ServicesConfiguration = {
-  // In case you need to change your redis connection data, this is the place to go
-  redisClient: new RedisClient({}) // for configuration options, see "redis" npm module
+  sessionStorage: {
+    factoryName: "platform"
+  }
 }
 
 const unifierConfiguration: UnifierConfiguration = {

@@ -1,20 +1,20 @@
-import { unifierInterfaces, injectionNames, servicesInterfaces } from "assistant-source";
+import { GenericIntent, injectionNames, MinimalResponseHandler, PlatformSpecHelper, Session } from "assistant-source";
 
 describe("MainState", function() {
-  let responseHandler: unifierInterfaces.MinimalResponseHandler;
-  let currentSessionFactory: () => servicesInterfaces.Session;
+  let responseHandler: MinimalResponseHandler;
+  let currentSessionFactory: () => Session;
   let currentStateNameProvider: () => Promise<string>;
 
   describe("on platform = alexa", function() {
     beforeEach(function() {
       this.callIntent = (intent) => {
-        return (this.platforms.alexa as unifierInterfaces.PlatformSpecHelper).pretendIntentCalled(intent);
+        return (this.platforms.alexa as PlatformSpecHelper).pretendIntentCalled(intent);
       };
     });
 
     describe("invokeGenericIntent", function() {
       it("greets and prompts for command", async function(done) {
-        let responseHandler = await this.callIntent(unifierInterfaces.GenericIntent.Invoke);
+        let responseHandler = await this.callIntent(GenericIntent.Invoke);
         expect(responseHandler.endSession).toBeFalsy();
         expect(this.translateValuesFor("mainState.invokeGenericIntent")).toContain(responseHandler.voiceMessage);
         done();
@@ -32,7 +32,7 @@ describe("MainState", function() {
 
     describe("helpGenericIntent", function() {
       it("tries to help", async function(done) {
-        let responseHandler = await this.callIntent(unifierInterfaces.GenericIntent.Help);
+        let responseHandler = await this.callIntent(GenericIntent.Help);
         expect(responseHandler.endSession).toBeFalsy();
         expect(this.translateValuesFor("mainState.helpGenericIntent")).toContain(responseHandler.voiceMessage);
         done();
@@ -41,7 +41,7 @@ describe("MainState", function() {
 
     describe("cancelGenericIntent", function() {
       it("says generic goodbye and ends session", async function(done) {
-        let responseHandler = await this.callIntent(unifierInterfaces.GenericIntent.Cancel);
+        let responseHandler = await this.callIntent(GenericIntent.Cancel);
         expect(responseHandler.endSession).toBeTruthy();
         expect(this.translateValuesFor("root.cancelGenericIntent")).toContain(responseHandler.voiceMessage);
         done();
@@ -64,8 +64,8 @@ describe("MainState", function() {
       it("stores guessed number into session", async function(done) {
         currentSessionFactory = this.container.inversifyInstance.get(injectionNames.current.sessionFactory)
         let myNumber = await currentSessionFactory().get("myNumber");
-        expect(parseInt(myNumber)).toBeGreaterThan(0);
-        expect(parseInt(myNumber)).toBeLessThanOrEqual(10);
+        expect(parseInt(myNumber || "0")).toBeGreaterThan(0);
+        expect(parseInt(myNumber || "0")).toBeLessThanOrEqual(10);
         done();
       });
 

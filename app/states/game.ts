@@ -36,9 +36,8 @@ export class GameState extends BackIntentMixin(ApplicationState) {
   @needs("guessedNumber")
   async guessNumberIntent() {
     // Retrieve myNumber from session and given number from entity dictionary
-    let guessedNumber = parseInt(this.entities.get("guessedNumber") as string);
-    let sessionContainedValue = await this.currentSessionFactory().get("myNumber");
-    let myNumber = parseInt(sessionContainedValue);
+    let guessedNumber: number = +(this.entities.get("guessedNumber") || 0);
+    let myNumber: number  = await +(this.currentSessionFactory().get("myNumber") || 0);
 
     if (myNumber === guessedNumber) return this.endSessionWith(this.t(".success"));
     return this.endSessionWith(this.t(".failure", { myNumber: myNumber }));
@@ -48,7 +47,7 @@ export class GameState extends BackIntentMixin(ApplicationState) {
    * This acts here as generic utterance fallback: As long as the user gave me a number, he probably meant guessNumberIntent(). 
    * Otherwise, just use the old unhandledIntent from ApplicationState.
    */
-  unhandledGenericIntent(machine: Transitionable) {
+   async unhandledGenericIntent(machine: Transitionable) {
     if (this.entities.contains("guessedNumber")) {
       return machine.handleIntent("guessNumber");
     } else if (this.entities.contains("number")) {
