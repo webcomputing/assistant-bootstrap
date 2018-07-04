@@ -15,7 +15,7 @@ export class MainState extends ApplicationState {
 
   constructor(
     @inject(injectionNames.current.stateSetupSet) stateSetupSet: State.SetupSet,
-    @inject("core:unifier:current-session-factory") sessionFactory: CurrentSessionFactory,
+    @inject(injectionNames.current.sessionFactory) sessionFactory: CurrentSessionFactory,
   ) {
     super(stateSetupSet);    
     this.currentSessionFactory = sessionFactory;
