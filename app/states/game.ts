@@ -1,9 +1,8 @@
-import { CurrentSessionFactory, EntityDictionary, injectionNames, State, Transitionable } from "assistant-source";
-import { needs } from "assistant-validations";
+import { CurrentSessionFactory, injectionNames, State, EntityDictionary, Transitionable } from "assistant-source";
 import { inject, injectable } from "inversify";
+import { needs } from "assistant-validations";
 import { ApplicationState } from "./application";
-import { BackIntentMixin } from "./mixins/backIntent";
-
+import { CurrentAnswerTypes, CurrentHandler } from "../../config/handler";
 
 /**
  * GameState
@@ -14,19 +13,19 @@ import { BackIntentMixin } from "./mixins/backIntent";
  */
 
 @injectable()
-// You want some OAuth/Pin/whatever authentication? Just add: @authenticate(OAuthStrategy) and have a look at auth-strategies/oauth
-export class GameState extends BackIntentMixin(ApplicationState) {
+export class GameState extends ApplicationState {
   currentSessionFactory: CurrentSessionFactory;
+  entities: EntityDictionary
 
   constructor(
-    @inject(injectionNames.current.stateSetupSet) stateSetupSet: State.SetupSet,
+    @inject(injectionNames.current.stateSetupSet) stateSetupSet: State.SetupSet<CurrentAnswerTypes, CurrentHandler>,
     @inject(injectionNames.current.sessionFactory) sessionFactory: CurrentSessionFactory,
-    @inject(injectionNames.current.entityDictionary) public entities: EntityDictionary
+    @inject(injectionNames.current.entityDictionary) entities: EntityDictionary
   ) {
     super(stateSetupSet);
     this.currentSessionFactory = sessionFactory;
+    this.entities = entities;
   }
-
   /**
    * As soon as the user answers with a guessed number, this intent is called.
    * The @needs decorator is part of assistant-validations and tells assistantJS to wait until the user really
@@ -34,10 +33,10 @@ export class GameState extends BackIntentMixin(ApplicationState) {
    * Have a look closer at config/components.ts and translations.json for some links to this.
    */
   @needs("guessedNumber")
-  async guessNumberIntent() {
+  public async guessNumberIntent() {
     // Retrieve myNumber from session and given number from entity dictionary
-    let guessedNumber: number = +(this.entities.get("guessedNumber") || 0);
-    let myNumber: number  = await +(this.currentSessionFactory().get("myNumber") || 0);
+    let guessedNumber = this.entities.get("guessedNumber") as string;
+    let myNumber = await this.currentSessionFactory().get("myNumber") as string;
 
     if (myNumber === guessedNumber) return this.endSessionWith(this.t(".success"));
     return this.endSessionWith(this.t(".failure", { myNumber: myNumber }));
@@ -54,7 +53,7 @@ export class GameState extends BackIntentMixin(ApplicationState) {
       this.entities.set("guessedNumber", this.entities.get("number"));
       return machine.handleIntent("guessNumber");
     } else {
-      return super.unhandledIntent(machine);
+      return super.unhandledGenericIntent(machine, "guessedNumber");
     }
   }
 }

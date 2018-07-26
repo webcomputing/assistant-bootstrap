@@ -7,13 +7,14 @@
     "test": "jasmine-ts spec/**/*.spec.ts"
   },
   "dependencies": {
-    "assistant-alexa": "^0.3.1",
-    "assistant-apiai": "^0.3.0",
-    "assistant-authentication": "^0.3.0",
+    "assistant-alexa": "internal",
+    "assistant-apiai": "internal",
+    "assistant-authentication": "internal",
     "assistant-generic-utterances": "^0.5.0",
-    "assistant-google": "^0.3.0",
-    "assistant-source": "^0.3.2",
-    "assistant-validations": "^0.3.0"
+    "assistant-google": "internal",
+    "assistant-source": "internal",
+    "assistant-validations": "internal",
+    "fakeredis": "^2.0.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.5.48",

@@ -5,7 +5,7 @@ export function BackIntentMixin<T extends Constructor<ApplicationState>>(superSt
   return class extends superState {
     async backIntent(machine: Transitionable) {
       await machine.transitionTo("MainState");
-      this.responseFactory.createVoiceResponse().prompt(this.translateHelper.t());
+      this.responseHandler.prompt(this.translateHelper.t());
     }
   }
 }

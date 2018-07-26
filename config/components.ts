@@ -1,4 +1,4 @@
-import { RedisClient } from "redis";
+import * as fakeRedis from "fakeredis";
 import {
   AssistantJSConfiguration,
   I18nConfiguration,
@@ -35,7 +35,11 @@ const i18nConfiguration: I18nConfiguration = {
 /** Configuration of AssistantJS's services component (interface = ServicesConfiguration) */
 const servicesConfiguration: ServicesConfiguration = {
   sessionStorage: {
-    factoryName: "platform"
+    factoryName: "redis",
+    configuration: {
+        maxLifeTime: 1800,
+        redisClient: fakeRedis.createClient(6379)
+    }
   }
 }
 

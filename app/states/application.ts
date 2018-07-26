@@ -1,12 +1,11 @@
 import { BaseState, State, Transitionable } from "assistant-source";
 import { injectable, unmanaged } from "inversify";
-import { ApplicationState as ApplicationStateInterface } from "../interfaces";
-
+import { CurrentAnswerTypes, CurrentHandler } from "../../config/handler";
 
 @injectable()
-export class ApplicationState extends BaseState implements ApplicationStateInterface {
-  constructor(@unmanaged() stateSetupSet: State.SetupSet) {
-    super(stateSetupSet);    
+export class ApplicationState extends BaseState<CurrentAnswerTypes, CurrentHandler> {
+  constructor(@unmanaged() setupSet: State.SetupSet<CurrentAnswerTypes, CurrentHandler>) {
+    super(setupSet);
   }
 
   /** 
@@ -16,14 +15,14 @@ export class ApplicationState extends BaseState implements ApplicationStateInter
    */
   unhandledIntent(machine: Transitionable) {
     // Although we are in a different state, all i18n conventions ("{state}.{intent}.{platform}.{key}") still apply
-    this.responseFactory.createVoiceResponse().prompt(this.translateHelper.t());
+    this.responseHandler.prompt(this.translateHelper.t());
   }
 
   /** 
    * Called if user says "Help me!" or "What can I do now?"
    */
   helpGenericIntent() {
-    this.responseFactory.createVoiceResponse().prompt(this.translateHelper.t());
+    this.responseHandler.prompt(this.translateHelper.t());
   }
 
   /**
@@ -31,6 +30,6 @@ export class ApplicationState extends BaseState implements ApplicationStateInter
    */
   cancelGenericIntent() {
     // We are using ".endSessionWith" instead of ".prompt" here to really end this conversation now
-    this.responseFactory.createVoiceResponse().endSessionWith(this.translateHelper.t());
+    this.responseHandler.endSessionWith(this.translateHelper.t());
   }
 }

@@ -1,6 +1,7 @@
 import { CurrentSessionFactory, injectionNames, State, Transitionable } from "assistant-source";
 import { inject, injectable } from "inversify";
 import { ApplicationState } from "./application";
+import { CurrentAnswerTypes, CurrentHandler } from "../../config/handler";
 
 
 /**
@@ -14,10 +15,10 @@ export class MainState extends ApplicationState {
   currentSessionFactory: CurrentSessionFactory;
 
   constructor(
-    @inject(injectionNames.current.stateSetupSet) stateSetupSet: State.SetupSet,
-    @inject(injectionNames.current.sessionFactory) sessionFactory: CurrentSessionFactory,
+    @inject(injectionNames.current.stateSetupSet) stateSetupSet: State.SetupSet<CurrentAnswerTypes, CurrentHandler>,
+    @inject(injectionNames.current.sessionFactory) sessionFactory: CurrentSessionFactory
   ) {
-    super(stateSetupSet);    
+    super(stateSetupSet);
     this.currentSessionFactory = sessionFactory;
   }
 
@@ -26,7 +27,7 @@ export class MainState extends ApplicationState {
    * It is called as soon as the application is launched, e. g. if user says "launch xxxxx".
    */
   invokeGenericIntent() {
-    this.responseFactory.createVoiceResponse().prompt(this.translateHelper.t());
+    this.responseHandler.prompt(this.translateHelper.t());
   }
 
   /**
@@ -46,6 +47,6 @@ export class MainState extends ApplicationState {
     await machine.transitionTo("GameState")
 
     // Send response 
-    this.responseFactory.createVoiceResponse().prompt(this.translateHelper.t());
+    this.responseHandler.prompt(this.translateHelper.t());
   }
 }
