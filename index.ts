@@ -1,5 +1,4 @@
 import { AssistantJSSetup, StateMachineSetup } from "assistant-source";
-import { descriptor as alexaDescriptor } from "assistant-alexa";
 import { descriptor as apiAiDescriptor } from "assistant-apiai";
 import { descriptor as googleDescriptor } from "assistant-google";
 import { descriptor as authenticationDescriptor, AuthenticationSetup } from "assistant-authentication";
@@ -25,7 +24,6 @@ export const authenticationSetup = new AuthenticationSetup(assistantJs);
  */
 export function initializeSetups (assistantJs: AssistantJSSetup, stateMachineSetup: StateMachineSetup, authenticationSetup: AuthenticationSetup, addOnly = false) {
   // Register all components
-  assistantJs.registerComponent(alexaDescriptor);
   assistantJs.registerComponent(authenticationDescriptor);
   assistantJs.registerComponent(validationsDescriptor);
   assistantJs.registerComponent(apiAiDescriptor);

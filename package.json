@@ -7,7 +7,6 @@
     "test": "jasmine-ts spec/**/*.spec.ts"
   },
   "dependencies": {
-    "assistant-alexa": "internal",
     "assistant-apiai": "internal",
     "assistant-authentication": "internal",
     "assistant-generic-utterances": "^0.5.0",
