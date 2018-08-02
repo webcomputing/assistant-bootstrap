@@ -27,7 +27,7 @@ export class MainState extends ApplicationState {
    * It is called as soon as the application is launched, e. g. if user says "launch xxxxx".
    */
   invokeGenericIntent() {
-    this.responseHandler.prompt(this.translateHelper.t());
+    this.prompt(this.t());
   }
 
   /**
@@ -41,12 +41,12 @@ export class MainState extends ApplicationState {
     let myNumber: string = `${Math.floor(Math.random() * 10) + 1}`;
 
     // Store this number into session and transition to new state      
-    await this.currentSessionFactory().set("myNumber", myNumber.toString()),
+    await this.currentSessionFactory().set("myNumber", myNumber.toString());
 
     // Transition to GameState
-    await machine.transitionTo("GameState")
+    await machine.transitionTo("GameState");
 
     // Send response 
-    this.responseHandler.prompt(this.translateHelper.t());
+    this.prompt(this.t());
   }
 }

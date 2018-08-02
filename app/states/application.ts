@@ -15,14 +15,14 @@ export class ApplicationState extends BaseState<CurrentAnswerTypes, CurrentHandl
    */
   unhandledIntent(machine: Transitionable) {
     // Although we are in a different state, all i18n conventions ("{state}.{intent}.{platform}.{key}") still apply
-    this.responseHandler.prompt(this.translateHelper.t());
+    this.prompt(this.t());
   }
 
   /** 
    * Called if user says "Help me!" or "What can I do now?"
    */
   helpGenericIntent() {
-    this.responseHandler.prompt(this.translateHelper.t());
+    this.prompt(this.t());
   }
 
   /**
@@ -30,6 +30,6 @@ export class ApplicationState extends BaseState<CurrentAnswerTypes, CurrentHandl
    */
   cancelGenericIntent() {
     // We are using ".endSessionWith" instead of ".prompt" here to really end this conversation now
-    this.responseHandler.endSessionWith(this.translateHelper.t());
+    this.endSessionWith(this.t());
   }
 }

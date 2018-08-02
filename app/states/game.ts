@@ -16,16 +16,14 @@ import { CurrentAnswerTypes, CurrentHandler } from "../../config/handler";
 @injectable()
 export class GameState extends BackIntentMixin(ApplicationState) {
   currentSessionFactory: CurrentSessionFactory;
-  entities: EntityDictionary
 
   constructor(
     @inject(injectionNames.current.stateSetupSet) stateSetupSet: State.SetupSet<CurrentAnswerTypes, CurrentHandler>,
     @inject(injectionNames.current.sessionFactory) sessionFactory: CurrentSessionFactory,
-    @inject(injectionNames.current.entityDictionary) entities: EntityDictionary
+    @inject(injectionNames.current.entityDictionary) public entities: EntityDictionary
   ) {
     super(stateSetupSet);
     this.currentSessionFactory = sessionFactory;
-    this.entities = entities;
   }
   /**
    * As soon as the user answers with a guessed number, this intent is called.
@@ -54,7 +52,7 @@ export class GameState extends BackIntentMixin(ApplicationState) {
       this.entities.set("guessedNumber", this.entities.get("number"));
       return machine.handleIntent("guessNumber");
     } else {
-      super.unhandledGenericIntent(machine, "guessedNumber");
+      super.unhandledGenericIntent(machine,"guessedNumber");
     }
   }
 }
