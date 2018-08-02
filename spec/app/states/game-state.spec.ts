@@ -8,7 +8,7 @@ interface CurrentThisContext extends ThisContext {
 }
 
 describe("GameState", function() {
-  const myNumber = 2;
+  const myNumber = "2";
   let currentSessionFactory: () => Session;
 
   describe("on platform = alexa", function() {
