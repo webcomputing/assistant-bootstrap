@@ -40,7 +40,7 @@ export class GameState extends BackIntentMixin(ApplicationState) {
     let myNumber = await this.currentSessionFactory().get("myNumber") || "";
 
     // Compare myNumber with the given number from entitiy dictionary and end session with specific answer.
-    this.endSessionWith(await this.t(myNumber === guessedNumber ? ".success" : ".failure", { myNumber}));
+    this.endSessionWith(this.t(myNumber === guessedNumber ? ".success" : ".failure", { myNumber}));
   }
 
   /**

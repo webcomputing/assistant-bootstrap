@@ -7,6 +7,7 @@ import {
 } from "assistant-source";
 import { ApiaiConfigurationAttribute, ApiaiConfiguration } from 'assistant-apiai';
 import { ValidationsConfigurationAttribute, ValidationsConfiguration } from "assistant-validations";
+import { AlexaConfiguration, AlexaConfigurationAttribute } from "assistant-alexa";
 
 /*
  * In AssistantJS, every component may have it's own configuration settings. For example,
@@ -52,6 +53,30 @@ const unifierConfiguration: UnifierConfiguration = {
     "number": ["guessedNumber"]
   }
 }
+
+const alexaConfiguration: AlexaConfiguration = {
+  /**
+   * Users say a skill's invocation name to begin an interaction with your custom skill
+   * Your invocation name can contain only lower-case alphabetic characters, spaces between words, possessive apostrophes, or periods.
+   * Other characters like numbers must be spelled out. For example, "twenty one".
+   */
+  invocationName: "YOUR-INVOCATION-NAME",
+  // You find your application id in the amazon developers console. Paste it here!
+  applicationID: "YOUR-APPLICATION-ID",
+  // Make sure that you configure this route in your amazon developers console (https url), too!
+  route: "/alexa",
+  /**
+   * assistant-alexa uses the alexa-verifier to verify incomming requests have been sent by Amazon. But sometimes this
+   * makes problems, especially if testing with the developer console. With this option, you can enable or disable
+   * alexa-verifier.
+   */
+  useVerifier: false,
+  entities: {
+    "number": "AMAZON.NUMBER"
+  }
+
+}
+
 // Same applies to api.ai
 const apiaiConfiguration: ApiaiConfiguration = {
   route: "/apiai",
@@ -73,12 +98,13 @@ const validationsConfiguration: ValidationsConfiguration = {
  * Each configuration must be mapped to it's corresponding component name.
  * The registration is done in index.ts.
  */
-const configuration: AssistantJSConfiguration & ApiaiConfigurationAttribute & ValidationsConfigurationAttribute = {
+const configuration: AssistantJSConfiguration & ApiaiConfigurationAttribute & ValidationsConfigurationAttribute & AlexaConfigurationAttribute = {
   "core:i18n": i18nConfiguration,
   "core:services": servicesConfiguration,
   "core:unifier": unifierConfiguration,
   "apiai": apiaiConfiguration,
-  "validations": validationsConfiguration
+  "validations": validationsConfiguration,
+  "alexa": alexaConfiguration
 }
 
 // The linking between your configuration and your application is done in your index.ts
