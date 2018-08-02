@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "assistant-apiai": "internal",
+    "assistant-alexa": "internal",
     "assistant-authentication": "internal",
     "assistant-generic-utterances": "^0.5.0",
     "assistant-google": "internal",
@@ -19,7 +20,7 @@
     "@types/jasmine": "^2.5.48",
     "@types/node": "^9.6.22",
     "gulp": "^3.9.1",
-    "jasmine-ts": "^0.1.3",
+    "jasmine-ts": "^0.2.1",
     "reflect-metadata": "^0.1.10",
     "tslint": "^5.4.0",
     "typescript": "^2.9.2"

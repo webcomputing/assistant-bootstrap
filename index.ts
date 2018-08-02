@@ -4,6 +4,7 @@ import { descriptor as googleDescriptor } from "assistant-google";
 import { descriptor as authenticationDescriptor, AuthenticationSetup } from "assistant-authentication";
 import { descriptor as validationsDescriptor } from "assistant-validations";
 import { descriptor as genericUtterancesDescriptor } from "assistant-generic-utterances";
+import { descriptor as alexaDescriptor } from "assistant-alexa";
 import components from "./config/components";
 
 /** 
@@ -24,6 +25,7 @@ export const authenticationSetup = new AuthenticationSetup(assistantJs);
  */
 export function initializeSetups (assistantJs: AssistantJSSetup, stateMachineSetup: StateMachineSetup, authenticationSetup: AuthenticationSetup, addOnly = false) {
   // Register all components
+  assistantJs.registerComponent(alexaDescriptor);
   assistantJs.registerComponent(authenticationDescriptor);
   assistantJs.registerComponent(validationsDescriptor);
   assistantJs.registerComponent(apiAiDescriptor);

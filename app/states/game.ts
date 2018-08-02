@@ -2,6 +2,7 @@ import { CurrentSessionFactory, injectionNames, State, EntityDictionary, Transit
 import { inject, injectable } from "inversify";
 import { needs } from "assistant-validations";
 import { ApplicationState } from "./application";
+import { BackIntentMixin } from "./mixins/backIntent";
 import { CurrentAnswerTypes, CurrentHandler } from "../../config/handler";
 
 /**
@@ -13,7 +14,7 @@ import { CurrentAnswerTypes, CurrentHandler } from "../../config/handler";
  */
 
 @injectable()
-export class GameState extends ApplicationState {
+export class GameState extends BackIntentMixin(ApplicationState) {
   currentSessionFactory: CurrentSessionFactory;
   entities: EntityDictionary
 
@@ -29,17 +30,17 @@ export class GameState extends ApplicationState {
   /**
    * As soon as the user answers with a guessed number, this intent is called.
    * The @needs decorator is part of assistant-validations and tells assistantJS to wait until the user really
-   * submits the entity "guessedNumber". If the user did not submit this entity, assistantJS will prompt for it.
+   * submits the entity "guessedNumber". If the user did not submit this ecntity, assistantJS will prompt for it.
    * Have a look closer at config/components.ts and translations.json for some links to this.
    */
   @needs("guessedNumber")
   public async guessNumberIntent() {
     // Retrieve myNumber from session and given number from entity dictionary
-    let guessedNumber = this.entities.get("guessedNumber") as string;
-    let myNumber = await this.currentSessionFactory().get("myNumber") as string;
+    let guessedNumber = this.entities.get("guessedNumber");
+    let myNumber = await this.currentSessionFactory().get("myNumber") || "";
 
-    if (myNumber === guessedNumber) return this.endSessionWith(this.t(".success"));
-    return this.endSessionWith(this.t(".failure", { myNumber: myNumber }));
+    // Compare myNumber with the given number from entitiy dictionary and end session with specific answer.
+    this.endSessionWith(await this.t(myNumber === guessedNumber ? ".success" : ".failure", { myNumber}));
   }
 
   /**
@@ -53,7 +54,7 @@ export class GameState extends ApplicationState {
       this.entities.set("guessedNumber", this.entities.get("number"));
       return machine.handleIntent("guessNumber");
     } else {
-      return super.unhandledGenericIntent(machine, "guessedNumber");
+      super.unhandledGenericIntent(machine, "guessedNumber");
     }
   }
 }

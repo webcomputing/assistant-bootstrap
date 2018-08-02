@@ -38,7 +38,7 @@ export class MainState extends ApplicationState {
    */
   async startGameIntent(machine: Transitionable) {
     // Think of a number between 1 and 10 (inclusive)
-    let myNumber = Math.floor(Math.random() * 10) + 1;
+    let myNumber: string = `${Math.floor(Math.random() * 10) + 1}`;
 
     // Store this number into session and transition to new state      
     await this.currentSessionFactory().set("myNumber", myNumber.toString()),
