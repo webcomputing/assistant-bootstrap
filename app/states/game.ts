@@ -35,15 +35,14 @@ export class GameState extends BackIntentMixin(ApplicationState) {
   public async guessNumberIntent() {
     // Retrieve myNumber from session and given number from entity dictionary
     let guessedNumber = this.entities.get("guessedNumber") || "0";
+    // Retrieve calculated number from session factory
+    let myNumber = await this.currentSessionFactory().get("myNumber") || "";
 
     // Unfortunately, there is a bug in the current fakeredis 2.0.0 version so we have to do a typecast
     if(typeof(guessedNumber === "number")) {
       guessedNumber = guessedNumber.toString();
     }
-
-    // Retrieve calculated number from session factory
-    let myNumber = await this.currentSessionFactory().get("myNumber") || "";
-
+    
     // Compare myNumber with the given number from entitiy dictionary and end session with specific answer.
     this.endSessionWith(this.t(myNumber === guessedNumber ? ".success" : ".failure", { myNumber}));
   }
