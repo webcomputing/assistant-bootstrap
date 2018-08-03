@@ -1,4 +1,6 @@
-import { BasicAnswerTypes, BasicHandler } from "assistant-source";
+import { BasicAnswerTypes, BasicHandler, State } from "assistant-source";
 
-export type CurrentAnswerTypes = BasicAnswerTypes;
-export type CurrentHandler = BasicHandler<CurrentAnswerTypes>;
+export type MergedAnswerTypes = BasicAnswerTypes;
+export type MergedHandler = BasicHandler<MergedAnswerTypes>;
+
+export type MergedSetupSet = State.SetupSet<MergedAnswerTypes, MergedHandler>

@@ -1,9 +1,9 @@
-import { CurrentSessionFactory, injectionNames, State, EntityDictionary, Transitionable } from "assistant-source";
+import { CurrentSessionFactory, injectionNames, EntityDictionary, Transitionable } from "assistant-source";
 import { inject, injectable } from "inversify";
 import { needs } from "assistant-validations";
 import { ApplicationState } from "./application";
 import { BackIntentMixin } from "./mixins/backIntent";
-import { CurrentAnswerTypes, CurrentHandler } from "../../config/handler";
+import { MergedSetupSet } from "../../config/handler";
 
 /**
  * GameState
@@ -18,7 +18,7 @@ export class GameState extends BackIntentMixin(ApplicationState) {
   currentSessionFactory: CurrentSessionFactory;
 
   constructor(
-    @inject(injectionNames.current.stateSetupSet) stateSetupSet: State.SetupSet<CurrentAnswerTypes, CurrentHandler>,
+    @inject(injectionNames.current.stateSetupSet) stateSetupSet: MergedSetupSet,
     @inject(injectionNames.current.sessionFactory) sessionFactory: CurrentSessionFactory,
     @inject(injectionNames.current.entityDictionary) public entities: EntityDictionary
   ) {

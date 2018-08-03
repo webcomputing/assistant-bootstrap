@@ -33,7 +33,7 @@ export function initializeSetups (assistantJs: AssistantJSSetup, stateMachineSet
   assistantJs.registerComponent(genericUtterancesDescriptor);
 
   // Configure components
-  assistantJs.addConfiguration(components as any);
+  assistantJs.addConfiguration(components);
 
   // Register all states and strategies
   stateMachineSetup.registerByConvention(addOnly);
