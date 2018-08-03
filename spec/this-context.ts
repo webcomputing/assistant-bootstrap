@@ -6,9 +6,10 @@ import { GoogleSpecHelper } from "assistant-google";
 export interface ThisContext {
     assistantJs: AssistantJSSetup;
     specHelper: SpecHelper;
-    alexaSpecHelper: AlexaSpecHelper;
-    googleSpecHelper: GoogleSpecHelper;
+    platforms: {
+      "alexa": AlexaSpecHelper,
+      "googleAssistant": GoogleSpecHelper
+    }
     container: Container;
-    translateValuesForGetter(): TranslateValuesFor;
-    currentSessionFactoryGetter(): CurrentSessionFactory;
+    translateValuesFor(): TranslateValuesFor;
   }
