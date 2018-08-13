@@ -1,10 +1,10 @@
 import { AssistantJSSetup, StateMachineSetup } from "assistant-source";
-import { descriptor as alexaDescriptor } from "assistant-alexa";
 import { descriptor as apiAiDescriptor } from "assistant-apiai";
 import { descriptor as googleDescriptor } from "assistant-google";
 import { descriptor as authenticationDescriptor, AuthenticationSetup } from "assistant-authentication";
 import { descriptor as validationsDescriptor } from "assistant-validations";
 import { descriptor as genericUtterancesDescriptor } from "assistant-generic-utterances";
+import { descriptor as alexaDescriptor } from "assistant-alexa";
 import components from "./config/components";
 
 /** 

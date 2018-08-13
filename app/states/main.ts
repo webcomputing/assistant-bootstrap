@@ -1,6 +1,7 @@
-import { CurrentSessionFactory, injectionNames, State, Transitionable } from "assistant-source";
+import { CurrentSessionFactory, injectionNames, Transitionable } from "assistant-source";
 import { inject, injectable } from "inversify";
 import { ApplicationState } from "./application";
+import { MergedSetupSet } from "../../config/handler";
 
 
 /**
@@ -14,10 +15,10 @@ export class MainState extends ApplicationState {
   currentSessionFactory: CurrentSessionFactory;
 
   constructor(
-    @inject(injectionNames.current.stateSetupSet) stateSetupSet: State.SetupSet,
-    @inject("core:unifier:current-session-factory") sessionFactory: CurrentSessionFactory,
+    @inject(injectionNames.current.stateSetupSet) stateSetupSet: MergedSetupSet,
+    @inject(injectionNames.current.sessionFactory) sessionFactory: CurrentSessionFactory
   ) {
-    super(stateSetupSet);    
+    super(stateSetupSet);
     this.currentSessionFactory = sessionFactory;
   }
 
@@ -26,7 +27,7 @@ export class MainState extends ApplicationState {
    * It is called as soon as the application is launched, e. g. if user says "launch xxxxx".
    */
   invokeGenericIntent() {
-    this.responseFactory.createVoiceResponse().prompt(this.translateHelper.t());
+    this.prompt(this.t());
   }
 
   /**
@@ -37,18 +38,18 @@ export class MainState extends ApplicationState {
    */
   async startGameIntent(machine: Transitionable) {
     // Think of a number between 1 and 10 (inclusive)
-    let myNumber = Math.floor(Math.random() * 10) + 1;
+    let myNumber: string = `${Math.floor(Math.random() * 10) + 1}`;
 
     // Wait for both promises to finish, but run them in parallel
     await Promise.all([
-      // Store this number into session and transition to new state      
-      this.currentSessionFactory().set("myNumber", myNumber.toString()),
+      // Store this number into session and transition to new state   
+      this.currentSessionFactory().set("myNumber", myNumber),
 
       // Transition to GameState
       machine.transitionTo("GameState")
     ]);
 
     // Send response 
-    this.responseFactory.createVoiceResponse().prompt(this.translateHelper.t());
+    this.prompt(this.t());
   }
 }

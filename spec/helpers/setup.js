@@ -5,10 +5,9 @@ let AssistantAuthentication = require("assistant-authentication");
 let Alexa = require("assistant-alexa");
 let GoogleAssistant = require("assistant-google");
 
-
 beforeEach(function() {
   // Initialize AssistantJS spec helper and register some useful abbrevations
-  this.specHelper = new AssistantSource.SpecSetup();
+  this.specHelper = new AssistantSource.SpecHelper();
   this.assistantJs = this.specHelper.setup;
   this.container = this.assistantJs.container;
 
@@ -17,13 +16,13 @@ beforeEach(function() {
 
   // Initialize platform specific spec helpers; remember that all of them fulfill the AssistantSource.unifierInterfaces.PlatformSpecHelper interface!
   this.platforms = {
-    "alexa": new Alexa.SpecHelper(this.specHelper),
-    "googleAssistant": new GoogleAssistant.SpecHelper(this.specHelper)
+    "alexa": new Alexa.AlexaSpecHelper(this.specHelper),
+    "googleAssistant": new GoogleAssistant.GoogleSpecHelper(this.specHelper)
   }
-
+  
   // Execute bindings
   this.specHelper.prepare();
 
   // Shorten access to i18next helper
-  this.translateValuesFor = this.container.inversifyInstance.get(AssistantSource.injectionNames.i18nTranslateValuesFor);
+  this.translateValuesFor = () => this.container.inversifyInstance.get(AssistantSource.injectionNames.current.i18nTranslateValuesFor);
 });

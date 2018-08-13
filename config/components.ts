@@ -1,13 +1,13 @@
-import { RedisClient } from "redis";
+import * as fakeRedis from "fakeredis";
 import {
   AssistantJSConfiguration,
   I18nConfiguration,
   ServicesConfiguration,
   UnifierConfiguration
 } from "assistant-source";
-import { AlexaConfigurationAttribute, AlexaConfiguration } from "assistant-alexa";
 import { ApiaiConfigurationAttribute, ApiaiConfiguration } from 'assistant-apiai';
 import { ValidationsConfigurationAttribute, ValidationsConfiguration } from "assistant-validations";
+import { AlexaConfiguration, AlexaConfigurationAttribute } from "assistant-alexa";
 
 /*
  * In AssistantJS, every component may have it's own configuration settings. For example,
@@ -34,8 +34,13 @@ const i18nConfiguration: I18nConfiguration = {
 
 /** Configuration of AssistantJS's services component (interface = ServicesConfiguration) */
 const servicesConfiguration: ServicesConfiguration = {
-  // In case you need to change your redis connection data, this is the place to go
-  redisClient: new RedisClient({}) // for configuration options, see "redis" npm module
+  sessionStorage: {
+    factoryName: "redis",
+    configuration: {
+        maxLifeTime: 1800,
+        redisClient: fakeRedis.createClient(6379)
+    }
+  }
 }
 
 const unifierConfiguration: UnifierConfiguration = {
@@ -93,13 +98,13 @@ const validationsConfiguration: ValidationsConfiguration = {
  * Each configuration must be mapped to it's corresponding component name.
  * The registration is done in index.ts.
  */
-const configuration: AssistantJSConfiguration & AlexaConfigurationAttribute & ApiaiConfigurationAttribute & ValidationsConfigurationAttribute = {
+const configuration: AssistantJSConfiguration & ApiaiConfigurationAttribute & ValidationsConfigurationAttribute & AlexaConfigurationAttribute = {
   "core:i18n": i18nConfiguration,
   "core:services": servicesConfiguration,
   "core:unifier": unifierConfiguration,
-  "alexa": alexaConfiguration,
   "apiai": apiaiConfiguration,
-  "validations": validationsConfiguration
+  "validations": validationsConfiguration,
+  "alexa": alexaConfiguration
 }
 
 // The linking between your configuration and your application is done in your index.ts
