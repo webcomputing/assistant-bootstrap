@@ -3,13 +3,13 @@ import { ThisContext } from "../../this-context";
 
 interface CurrentThisContext extends ThisContext {
   /** Invokes the guessNumberIntent and returns specific response results */
-  prepareGuessing(guessedNumber?: number | undefined): Promise<Partial<BasicAnswerTypes>>;
+  prepareGuessing(guessedNumber?: string | undefined): Promise<Partial<BasicAnswerTypes>>;
   /** Simulate an intent call and returns the response results */
   callIntent(intent: GenericIntent | string): Promise<Partial<BasicAnswerTypes>>;
 }
 
 describe("GameState", function() {
-  const myNumber = 2;
+  const myNumber = "2"; 
   let currentSessionFactory: () => Session;
 
   describe("on platform = alexa", function() {
@@ -23,7 +23,7 @@ describe("GameState", function() {
 
         // Store number in session factory
         currentSessionFactory = this.container.inversifyInstance.get(injectionNames.current.sessionFactory);
-        await currentSessionFactory().set("myNumber", myNumber.toString()),
+        await currentSessionFactory().set("myNumber", myNumber),
 
         // Run state machine and return responseHandler
         await this.platforms.alexa.specSetup.runMachine("GameState")
